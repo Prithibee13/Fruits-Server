@@ -105,6 +105,14 @@ async function run() {
 
         })
 
+        app.put("/addnewitem" , async(req,res)=>
+        {
+            const newItem = req.body;
+            const result = await fruitCollection.insertOne(newItem)
+
+            res.send(result)
+        })
+
     }
 
     finally {
