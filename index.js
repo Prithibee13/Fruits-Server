@@ -21,7 +21,6 @@ async function run() {
         const fruitCollection = client.db('Fruits').collection('fruit-collection');
 
 
-
         app.get('/items', async (req, res) => {
             const query = {};
             const cursor = fruitCollection.find(query);
@@ -62,7 +61,7 @@ async function run() {
         })
 
 
-        app.put("/item/:id", async (req, res) => {
+        app.put("/delivered/:id", async (req, res) => {
             const id = req.params.id;
             const updatedItem = req.body;
 
@@ -76,6 +75,27 @@ async function run() {
                 $set: {
                     Quantity: updatedItem.Quantity,
                     sale: updatedItem.sale
+                }
+            }
+
+            const result = await fruitCollection.updateOne(filter, updatedDoc, options);
+
+            res.send(result);
+
+        })
+
+        app.put("/restock/:id", async (req, res) => {
+            const id = req.params.id;
+            const updatedItem = req.body;
+
+
+            const filter = { _id: ObjectId(id) };
+
+            const options = { upsert: true };
+
+            const updatedDoc = {
+                $set: {
+                    Quantity: updatedItem.Quantity
                 }
             }
 
