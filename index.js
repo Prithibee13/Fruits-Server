@@ -115,7 +115,10 @@ async function run() {
 
 run().catch(console.dir)
 
-
+app.get('/' , (req , res)=>
+{
+    res.send("Fruit server is running")
+})
 
 app.listen(port, () => {
     console.log("Fruit-server is runnig in", port);
