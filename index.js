@@ -113,6 +113,16 @@ async function run() {
             res.send(result);
         })
 
+
+        app.post("/deleteitem" , async(req , res)=>
+        {
+            const id = req.body;
+
+            const result = await fruitCollection.deleteOne({ "_id" : ObjectId(id)})
+
+            res.send(result)
+        })
+
     }
 
     finally {
