@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,17 @@ async function run() {
         await client.connect();
         const fruitCollection = client.db('Fruits').collection('fruit-collection');
 
+        //auth
+
+        app.post('/login' , async(req , res)=>
+        {
+            const user = req.body;
+            const accessToken = jwt.sign(user , process.env.ACCESS_TOKEN_SECRET , {
+                expiresIn : '1y'
+            });
+
+            res.send(accessToken);
+        })
 
         app.get('/items', async (req, res) => {
             const query = {};
@@ -59,6 +71,7 @@ async function run() {
             const result = await fruitCollection.findOne(query);
             res.send(result);
         })
+
 
 
         app.put("/delivered/:id", async (req, res) => {
@@ -117,6 +130,7 @@ async function run() {
         app.post("/deleteitem" , async(req , res)=>
         {
             const id = req.body;
+            console.log(id);
 
             const result = await fruitCollection.deleteOne({ "_id" : ObjectId(id)})
 
