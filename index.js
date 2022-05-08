@@ -22,7 +22,7 @@ async function run() {
         const fruitCollection = client.db('Fruits').collection('fruit-collection');
 
         //auth
-        app.get('/login' , async(req , res)=>
+        app.post('/login' , async(req , res)=>
         {
             const user = req.body;
             const accessToken = jwt.sign(user , process.env.ACCESS_TOKEN_SECRET , {
