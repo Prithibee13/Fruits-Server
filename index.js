@@ -152,5 +152,5 @@ app.get('/' , (req , res)=>
 })
 
 app.listen(port, () => {
-    console.log("Fruit-server is runnig in", port);
+    console.log("Fruit-server is runnig in port : ", port);
 })
